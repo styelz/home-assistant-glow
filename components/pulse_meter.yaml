@@ -19,7 +19,7 @@ number:
     max_value: 10000
     step: 10
     restore_value: yes
-    initial_value: 1000
+    initial_value: 3200
 
   # Reset total energy to given value
   - platform: template
