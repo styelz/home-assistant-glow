@@ -55,6 +55,45 @@ Choose one of the listed microcontrollers, but keep in mind that the ESP32 is re
 - LM393 Photodiode: [AliExpress](https://s.click.aliexpress.com/e/_c3utxSRp) or [Banggood][photodiode-bg-shop] or [AliExpress][photodiode-ali-shop] (please note that you will not receive an LDR)
 - LED RGB 5mm 4 pin - kathode: [AliExpress](https://s.click.aliexpress.com/e/_c3H3JVT9) or [Banggood][rgbled-bg-shop] or [AliExpress][rgbled-ali-shop]
 
+## Troubleshooting
+
+### LED Detection Issues - Receiving Abnormally High Power Readings
+
+If you're experiencing unusually high power consumption readings (e.g., 100,000W when normal usage is much lower), this indicates false pulse detection caused by electrical noise on the sensor pin.
+
+**Root Causes:**
+- Electromagnetic interference from nearby devices
+- Floating GPIO pin without proper pull-up/pull-down configuration
+- Sensor misalignment or inadequate shielding from ambient light
+- Weak or unstable sensor connections
+
+**Solutions:**
+
+1. **Enable Debouncing (Recommended - Already Configured)**
+   - The firmware includes a 100ms debounce filter on the pulse detection (`internal_filter: 100ms`)
+   - This filters out most electrical noise while capturing valid meter LED pulses
+
+2. **Increase Debounce Time**
+   - If issues persist, increase the debounce filter in `esp8266.yaml`:
+     ```yaml
+     pulse_debounce_time: 200ms  # or 500ms for more aggressive filtering
+     ```
+
+3. **Add Hardware Filtering**
+   - Solder a 0.1µF capacitor between GPIO5 and GND on your device
+   - This provides additional electrical noise suppression
+
+4. **Check Physical Installation**
+   - Verify the photodiode sensor is properly aligned with the meter's LED
+   - Ensure the sensor is shielded from direct ambient light and sunlight
+   - Check all Dupont wire connections are secure and not corroded
+
+5. **Verify Sensor Connections**
+   - Confirm the LM393 photodiode is correctly wired with proper pull-up resistors
+   - Test the sensor with a multimeter to verify it responds to the LED pulse
+
+For more detailed hardware guidance, see the [resources](https://glow-energy.io/docs/resources/schematics) section on the documentation website.
+
 ## Contributing
 
 This is an active open-source project. We are always open to people who want to use the code or contribute to it.

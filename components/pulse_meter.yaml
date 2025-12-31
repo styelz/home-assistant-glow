@@ -19,7 +19,7 @@ number:
     max_value: 10000
     step: 10
     restore_value: yes
-    initial_value: 3200
+    initial_value: ${pulse_rate}
 
   # Reset total energy to given value
   - platform: template
@@ -53,7 +53,13 @@ sensor:
     device_class: power
     icon: mdi:flash-outline
     accuracy_decimals: 0
-    pin: ${pulse_pin}
+    pin: 
+      number: ${pulse_pin}
+      mode:
+        input: true
+        pullup: true
+    internal_filter: ${pulse_debounce_time}
+    timeout: 10s
     on_raw_value:
       then:
         - light.turn_on:

@@ -16,6 +16,12 @@ substitutions:
   status_led: GPIO5
   led_pin_red: GPIO2
   led_pin_green: GPIO4
+  pulse_debounce_time: 150ms
+
+  # Pulse rate configuration (imp/kWh)
+  # Common values: 1000, 3200, 5000, 10000
+  # Check your meter for the correct imp/kWh value
+  pulse_rate: "3200"
 
 esphome:
   name: '${device_name}'
