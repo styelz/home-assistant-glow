@@ -3,10 +3,6 @@
 name: Build firmware
 
 on:
-  push:
-    branches:
-      - develop
-      - release/**
   workflow_dispatch:
     inputs:
       tag:
@@ -18,9 +14,6 @@ on:
       release-url:
         required: true
         type: string
-  pull_request:
-    branches-ignore:
-      - renovate/docusaurus**
   # Every Monday at 4:00 UTC
   schedule:
     - cron: "0 4 * * 1"
@@ -58,6 +51,11 @@ jobs:
           # Iterate through firmwares and devices
           for firmware in $FIRMWARES; do
             for device in $firmware/*.yaml; do
+              # Skip secrets.yaml
+              if [[ "$(basename "$device")" == "secrets.yaml" ]]; then
+                continue
+              fi
+              
               # If pull_request event type and changed files do not contain the device, skip it
               if [[ $fullRun -eq 0 && "${{ steps.changes.outputs.added_modified }}" != *"${device}"* ]]; then
                 continue
