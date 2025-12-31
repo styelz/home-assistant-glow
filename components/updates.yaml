@@ -6,11 +6,7 @@ ota:
     id: ota_http_request
 
 update:
-  - platform: http_request
-    id: update_http_request
+  - platform: github_release
+    id: update_github
     name: Firmware Update
-    source: https://glow-energy.io/home-assistant-glow/manifest.json
-
-http_request:
-  timeout: 10s
-  verify_ssl: false
+    source: github://styelz/home-assistant-glow

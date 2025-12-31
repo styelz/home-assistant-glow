@@ -51,10 +51,20 @@ packages:
 # Enable logging
 logger:
 
+# Allow provisioning Wi-Fi via serial
+improv_serial:
+
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
   use_address: 192.168.1.28
+  # Set up a wifi access point
+  ap:
+    ssid: '${friendly_name}'
+
+# In combination with the `ap` this allows the user
+# to provision wifi credentials to the device via WiFi AP.
+captive_portal:
 
 # Local Web Server running on port 80
 web_server:
