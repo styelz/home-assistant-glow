@@ -21,6 +21,25 @@ number:
     restore_value: yes
     initial_value: ${pulse_rate}
 
+  # Set the debounce time for pulse detection
+  - platform: template
+    id: select_debounce_time
+    name: 'Debounce Time - ms'
+    entity_category: config
+    optimistic: true
+    mode: box
+    min_value: 0
+    max_value: 1000
+    step: 10
+    restore_value: yes
+    initial_value: 150
+    unit_of_measurement: ms
+    on_value:
+      then:
+        - pulse_meter.set_total_pulses:
+            id: sensor_energy_pulse_meter
+            value: !lambda "return id(sensor_energy_pulse_meter).get_total_pulses();"
+
   # Reset total energy to given value
   - platform: template
     id: select_reset_total
