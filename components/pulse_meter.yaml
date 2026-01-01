@@ -87,6 +87,8 @@ sensor:
         - light.turn_off:
             id: led_red
     filters:
+      # Skip reporting for 30 seconds after startup to allow sensor to stabilize
+      - skip_initial: 30s
       # multiply value = (60 / imp value) * 1000
       # - multiply: 60
       - lambda: return x * ((60.0 / id(select_pulse_rate).state) * 1000.0);
