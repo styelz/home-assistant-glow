@@ -38,7 +38,7 @@ number:
       then:
         - pulse_meter.set_total_pulses:
             id: sensor_energy_pulse_meter
-            value: !lambda "return id(sensor_energy_pulse_meter).get_total_pulses();"
+            value: !lambda "return id(sensor_total_energy).state * id(select_pulse_rate).state;"
 
   # Reset total energy to given value
   - platform: template
