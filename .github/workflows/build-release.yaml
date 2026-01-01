@@ -1,9 +1,6 @@
 name: Build and Release
 
 on:
-  push:
-    branches:
-      - develop
   workflow_dispatch:
     inputs:
       tag_number:
