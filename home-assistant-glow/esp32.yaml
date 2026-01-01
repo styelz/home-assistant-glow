@@ -46,7 +46,6 @@ packages:
     ref: "4.2.3"
     files:
       - components/basis.yaml
-      - components/updates.yaml
       - components/status_led.yaml
       - components/pulse_meter.yaml
 
@@ -76,3 +75,9 @@ web_server:
 api:
   encryption:
     key: !secret glow_api_key
+
+# OTA configuration #
+ota:
+  - platform: esphome
+    id: ota_esphome
+    password: !secret glow_ota_password

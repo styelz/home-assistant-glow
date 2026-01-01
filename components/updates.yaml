@@ -1,5 +1,0 @@
-# OTA configuration #
-ota:
-  - platform: esphome
-    id: ota_esphome
-    password: !secret glow_ota_password
