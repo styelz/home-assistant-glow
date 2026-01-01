@@ -64,7 +64,3 @@ web_server:
 api:
   encryption:
     key: !secret glow_api_key
-
-ota:
-  - platform: esphome
-    password: !secret glow_ota_password
