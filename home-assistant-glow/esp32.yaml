@@ -59,7 +59,7 @@ wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
   use_address: 192.168.1.28
-  auth: WPA2PSK
+  min_auth_mode: WPA2
   # Set up a wifi access point
   ap:
     ssid: '${friendly_name}'
