@@ -40,7 +40,7 @@ jobs:
         id: check_tag
         continue-on-error: true
         run: |
-          if git rev-parse "v${{ steps.tag.outputs.tag_number }}" >/dev/null 2>&1; then
+          if git rev-parse "${{ steps.tag.outputs.tag_number }}" >/dev/null 2>&1; then
             echo "tag_exists=true" >> $GITHUB_OUTPUT
           else
             echo "tag_exists=false" >> $GITHUB_OUTPUT
@@ -50,27 +50,27 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release delete "v${{ steps.tag.outputs.tag_number }}" --yes --cleanup-tag 2>/dev/null || true
+          gh release delete "${{ steps.tag.outputs.tag_number }}" --yes --cleanup-tag 2>/dev/null || true
 
       - name: Delete existing tag from remote if it exists
         run: |
-          git push origin --delete "v${{ steps.tag.outputs.tag_number }}" 2>/dev/null || true
+          git push origin --delete "${{ steps.tag.outputs.tag_number }}" 2>/dev/null || true
 
       - name: Delete existing local tag if it exists
         run: |
-          git tag -d "v${{ steps.tag.outputs.tag_number }}" 2>/dev/null || true
+          git tag -d "${{ steps.tag.outputs.tag_number }}" 2>/dev/null || true
 
       - name: Create Git tag
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-          git tag "v${{ steps.tag.outputs.tag_number }}"
-          git push origin "v${{ steps.tag.outputs.tag_number }}"
+          git tag "${{ steps.tag.outputs.tag_number }}"
+          git push origin "${{ steps.tag.outputs.tag_number }}"
 
       - name: Create release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: "v${{ steps.tag.outputs.tag_number }}"
+          tag_name: "${{ steps.tag.outputs.tag_number }}"
           draft: false
           prerelease: false
         env:
